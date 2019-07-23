@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace用于绑定Dao接口 -->
-<mapper namespace="com.example.demo.model.User">
+<mapper namespace="com.example.demo.Mapper.UserMapper">
     <insert id="insert" parameterType="com.example.demo.model.User">
         insert into user(name,account_id,token,gmt_create,gmt_modified) values(#{name},#{accountId},#{token},#{gmtcreate},#{gmtmodified})
     </insert>
