@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.example.demo.DemoApplication;
 import com.example.demo.dto.AccessTokenDto;
 import com.example.demo.dto.GithubUser;
+import com.example.demo.model.UserResult;
 import okhttp3.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Component;
@@ -74,7 +75,11 @@ public class GithubProvider {
 //        Log.i("TAG","用户话语:" + userDcr + "," + "用户提问:" + userQuestion);
 //        Properties proper = ProperTies.getProperties(ApplicationUtil.getContext());
         int count = 0;//重复数
-        String result = "";//结果字符串
+        int startIndex = 0;//相同字符起始位置
+        int endIndex = 0;//相同字符结束位置
+        String result = "";//结果字符串s
+        String screenText = "";
+        UserResult userResult = new UserResult();
 //        String exceptionText = proper.getProperty("exceptionText");
         char[] dcrArray = userDcr.toCharArray(),questionArray = userQuestion.toCharArray();
         switch (type){
@@ -122,7 +127,6 @@ public class GithubProvider {
                         if(dcrArray[i]==questionArray[j]){
                             result += String.valueOf(dcrArray[i]);
                             count++;
-
                         }
                     }
                 }
@@ -132,14 +136,43 @@ public class GithubProvider {
                 }
                 else{
                     char[] resultArray = result.toCharArray();
+                    String backupCopy = userDcr;//备份用户话语
                     //循环用户话语字符串，将重复的依次剔除
                     for(int z=0;z<resultArray.length;z++){
                         userDcr = userDcr.replace(String.valueOf(resultArray[z]),"");
                     }
-                    result = userDcr;
+                    resultArray = userDcr.toCharArray();
+                    int screentSize = 0;
+                    int compareNum = 0;
+                    for(int q = 0;q<dcrArray.length;q++){
+                        compareNum = screentSize;
+                        for(int y = 0; y<resultArray.length;y++){
+                            if(dcrArray[q]==resultArray[y]){
+                                screenText += String.valueOf(resultArray[y]);
+                                if(startIndex==0){
+                                    startIndex = q;
+                                }
+                                screentSize++;
+                                break;
+                        }
+                    }
+                        //在找到相同字符下一个字符也匹配上的时候执行下面的语句
+                        if(startIndex!=0&&screentSize==compareNum){
+                            endIndex = q;
+                            result = backupCopy.substring(startIndex,endIndex);
+                            userResult.getResultList().add(result);
+                            startIndex = 0;
+                            result = "";
+                        }
+                    }
+                    userResult.setOriginalDcr(backupCopy);
+
                 }
-                System.out.println(result);
-                return result;
+                System.out.println(startIndex);
+                System.out.println(endIndex);
+                System.out.println(screenText);
+                System.out.println(userResult.toString());
+                return userDcr;
                 default:
                     System.out.println("输入type错误");
                     return null;
@@ -147,6 +180,6 @@ public class GithubProvider {
     }
 
     public static void main(String[] args) {
-        GithubProvider.getAnswer("我最喜欢吃香蕉","老头最喜欢吃的水果是什么？",1);
+        GithubProvider.getAnswer("老头打坐喜欢听大悲咒干呀","老头喜欢干什么？",1);
     }
 }
