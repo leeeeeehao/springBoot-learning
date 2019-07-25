@@ -9,6 +9,9 @@ import okhttp3.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Component;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -18,7 +21,7 @@ import java.util.Properties;
  */
 @Component
 public class GithubProvider {
-
+    private static List<String> userCstList = new ArrayList<>();
     /**
      * 获取AccessToken
      * @param accessTokenDto
@@ -71,9 +74,10 @@ public class GithubProvider {
      * @param userDcr,userQuestion,type 0-支持重复句式异常 1-剔除所有重复字符串
      * @return result
      */
-    public static String getAnswer(String userDcr,String userQuestion,int type){
+    public static UserResult getAnswer(String userDcr,String userQuestion,int type){
 //        Log.i("TAG","用户话语:" + userDcr + "," + "用户提问:" + userQuestion);
 //        Properties proper = ProperTies.getProperties(ApplicationUtil.getContext());
+        userCstList.add(userDcr);
         int count = 0;//重复数
         int startIndex = 0;//相同字符起始位置
         int endIndex = 0;//相同字符结束位置
@@ -120,7 +124,8 @@ public class GithubProvider {
                     result = "哈哈换个方式问我吧";
                     System.out.println(result);
                 }
-                return result;
+                userResult.setOriginalDcr(result);
+                return userResult;
             case 1:
                 for(int i=0;i<dcrArray.length;i++){
                     for(int j=0;j<questionArray.length;j++){
@@ -162,24 +167,36 @@ public class GithubProvider {
                             result = backupCopy.substring(startIndex,endIndex);
                             userResult.getResultList().add(result);
                             startIndex = 0;
+                            screenText = "";
                             result = "";
+                        }
+                        else if(q==dcrArray.length-1){
+                            if(screenText.equals("")){
+                                
+                            }
+                            else{
+                                 userResult.getResultList().add(screenText);
+                            }
                         }
                     }
                     userResult.setOriginalDcr(backupCopy);
-
                 }
-                System.out.println(startIndex);
-                System.out.println(endIndex);
-                System.out.println(screenText);
+                if(userResult.getResultList().size()>=3){
+                    userResult.setOriginalDcr("大哥你问的问题太多啦");
+                }
                 System.out.println(userResult.toString());
-                return userDcr;
+                return userResult;
                 default:
                     System.out.println("输入type错误");
                     return null;
         }
     }
 
+    public static List<String> getSessionLIst(){
+        return userCstList;
+    }
+
     public static void main(String[] args) {
-        GithubProvider.getAnswer("老头打坐喜欢听大悲咒干呀","老头喜欢干什么？",1);
+        GithubProvider.getAnswer("我叫李浩喜欢唱跳rap20岁了","你叫什么名字喜欢干什么几岁？",1);
     }
 }
