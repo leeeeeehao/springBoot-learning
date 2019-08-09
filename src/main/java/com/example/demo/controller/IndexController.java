@@ -5,6 +5,7 @@ import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -21,15 +22,15 @@ public class IndexController {
     private UserMapper userMapper;
 
     @GetMapping("/index")
-    public String index(HttpServletRequest request){
+    public String index(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
-        for(Cookie cookie : cookies){
-            if(cookie.getName().equals("token")){
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("token")) {
                 String token = cookie.getValue();
                 User user = userMapper.findUserToken(token);
                 //如果用户信息不为空，则添加session
-                if(user !=null){
-                    request.getSession().setAttribute("user",user);
+                if (user != null) {
+                    request.getSession().setAttribute("user", user);
                 }
                 break;
             }

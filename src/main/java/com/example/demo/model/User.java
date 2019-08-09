@@ -26,11 +26,11 @@ public class User {
      */
     private String token;
     /**
-     *
+     * 创建时间
      */
     private Long gmtCreate;
     /**
-     *
+     *修改时间
      */
     private Long gmtModified;
 
