@@ -15,25 +15,14 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2019/7/16 15:02
  */
 @Controller
-public class IndexController {
+public class IndexController extends BaseController{
 
     @Autowired
     private UserMapper userMapper;
 
     @GetMapping("/index")
     public String index(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("token")) {
-                String token = cookie.getValue();
-                User user = userMapper.findUserToken(token);
-                //如果用户信息不为空，则添加session
-                if (user != null) {
-                    request.getSession().setAttribute("user", user);
-                }
-                break;
-            }
-        }
+        User user = getUserInfoByCookie(request);
         return "index";
     }
 }

@@ -6,6 +6,7 @@ import com.example.demo.model.Question;
 import com.example.demo.model.User;
 import com.example.demo.service.QuestionService;
 import com.example.demo.vo.QuestionVo;
+import com.sun.xml.internal.rngom.parse.host.Base;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @Slf4j
-public class PublishController {
+public class PublishController extends BaseController {
 
     @Autowired
     private QuestionMapper questionMapper;
@@ -46,29 +47,17 @@ public class PublishController {
 
         try {
             log.info("用户登陆验证");
-            User user = null;
-            Cookie[] cookies = request.getCookies();
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("token")) {
-                    String token = cookie.getValue();
-                    user = userMapper.findUserToken(token);
-                    //如果用户信息不为空，则添加session
-                    if (user != null) {
-                        request.getSession().setAttribute("user", user);
-                    }
-                    break;
-                }
-            }
-
+            User user = getUserInfoByCookie(request);
+            //如果用户为空
             if (user == null) {
                 log.warn("用户未登录");
                 model.addAttribute("error", "用户未登录");
                 return "publish";
+            }else{
+                questionService.insertQuestion(title, content, labels, user.getId());
+                log.info("发布问题成功");
+                return "redirect:/";
             }
-
-            questionService.insertQuestion(title, content, labels, user.getId());
-            log.info("发布问题成功");
-            return "redirect:/";
         } catch (Exception e) {
             log.error("发生错误");
             model.addAttribute("error", "发生错误");
