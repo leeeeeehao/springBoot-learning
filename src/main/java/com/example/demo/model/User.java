@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * @author leehao
@@ -8,6 +9,7 @@ import lombok.Data;
  * @date 2019/7/23 17:20
  */
 @Data
+@ToString
 public class User {
     /**
      * 用户Id
@@ -26,6 +28,10 @@ public class User {
      */
     private String token;
     /**
+     * 用户头像
+     */
+    private String avatarUrl;
+    /**
      * 创建时间
      */
     private Long gmtCreate;
@@ -34,15 +40,4 @@ public class User {
      */
     private Long gmtModified;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", accountId='" + accountId + '\'' +
-                ", token='" + token + '\'' +
-                ", gmtCreate=" + gmtCreate +
-                ", gmtModified=" + gmtModified +
-                '}';
-    }
 }

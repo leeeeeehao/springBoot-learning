@@ -1,6 +1,7 @@
 package com.example.demo.dto;
 
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * @author leehao
@@ -8,6 +9,7 @@ import lombok.Data;
  * @date 2019/7/22 14:05
  */
 @Data
+@ToString
 public class GithubUser {
     /**
      * 用户名称
@@ -22,12 +24,8 @@ public class GithubUser {
      */
     private String bio;
 
-    @Override
-    public String toString() {
-        return "GithubUser{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                ", bio='" + bio + '\'' +
-                '}';
-    }
+    /**
+     * 用户头像
+     */
+    private String avatarUrl;
 }

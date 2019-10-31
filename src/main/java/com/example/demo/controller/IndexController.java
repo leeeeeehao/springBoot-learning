@@ -4,6 +4,7 @@ import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.Cookie;
@@ -15,14 +16,12 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2019/7/16 15:02
  */
 @Controller
-public class IndexController extends BaseController{
-
-    @Autowired
-    private UserMapper userMapper;
+public class IndexController extends BaseController {
 
     @GetMapping("/index")
-    public String index(HttpServletRequest request) {
+    public String index(HttpServletRequest request, Model model) {
         User user = getUserInfoByCookie(request);
         return "index";
     }
+
 }

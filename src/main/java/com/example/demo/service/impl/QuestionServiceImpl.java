@@ -1,11 +1,13 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.mapper.QuestionMapper;
+import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.Question;
 import com.example.demo.service.QuestionService;
-import com.example.demo.vo.QuestionVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 项目名称: game-parent
@@ -26,6 +28,9 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     private QuestionMapper questionMapper;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @Override
     public void insertQuestion(String title, String content, String labels, Integer creator) {
         Question question = new Question();
@@ -36,5 +41,14 @@ public class QuestionServiceImpl implements QuestionService {
         question.setGmtCreate(System.currentTimeMillis());
         question.setGmtModified(question.getGmtCreate());
         questionMapper.insertQuestion(question);
+    }
+
+    @Override
+    public List<Question> queryQuestions() {
+        List<Question> questions = questionMapper.queryQuestions();
+        for (Question question : questions) {
+
+        }
+        return questions;
     }
 }

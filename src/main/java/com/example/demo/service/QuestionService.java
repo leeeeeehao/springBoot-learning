@@ -3,6 +3,8 @@ package com.example.demo.service;
 import com.example.demo.model.Question;
 import com.example.demo.vo.QuestionVo;
 
+import java.util.List;
+
 /**
  * 项目名称: game-parent
  * 类名称: QuestionService
@@ -19,4 +21,6 @@ import com.example.demo.vo.QuestionVo;
 public interface QuestionService {
 
     void insertQuestion(String title, String content, String labels, Integer creator);
+
+    List<Question> queryQuestions();
 }

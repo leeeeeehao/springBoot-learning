@@ -46,6 +46,21 @@ public class PublishController extends BaseController {
                             HttpServletRequest request, Model model) {
 
         try {
+            model.addAttribute("title", title);
+            model.addAttribute("content", content);
+            model.addAttribute("labels", labels);
+
+            if (title == null || "".equals(title)) {
+                model.addAttribute("error", "标题不能为空");
+                return "publish";
+            } else if (content == null || "".equals(content)) {
+                model.addAttribute("error", "内容不能为空");
+                return "publish";
+            } else if (labels == null || "".equals(labels)) {
+                model.addAttribute("error", "标签不能为空");
+                return "publish";
+            }
+
             log.info("用户登陆验证");
             User user = getUserInfoByCookie(request);
             //如果用户为空
@@ -53,7 +68,7 @@ public class PublishController extends BaseController {
                 log.warn("用户未登录");
                 model.addAttribute("error", "用户未登录");
                 return "publish";
-            }else{
+            } else {
                 questionService.insertQuestion(title, content, labels, user.getId());
                 log.info("发布问题成功");
                 return "redirect:/";

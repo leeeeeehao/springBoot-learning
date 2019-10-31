@@ -4,6 +4,8 @@ import com.example.demo.model.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * 项目名称: game-parent
  * 类名称: QuestionMapper
@@ -22,4 +24,6 @@ public interface QuestionMapper {
 
     @Insert("insert into t_question(question_title,question_description,gmt_create,gmt_modified,question_creator,question_tags) values(#{title},#{description},#{gmtCreate},#{gmtModified},#{creator},#{tags}) ")
     int insertQuestion(Question question);
+
+    List<Question> queryQuestions();
 }
