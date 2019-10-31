@@ -1,9 +1,11 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.dto.QuestionDTO;
 import com.example.demo.mapper.QuestionMapper;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.Question;
 import com.example.demo.service.QuestionService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +34,7 @@ public class QuestionServiceImpl implements QuestionService {
     private UserMapper userMapper;
 
     @Override
-    public void insertQuestion(String title, String content, String labels, Integer creator) {
+    public void insertQuestion(String title, String content, String labels, String creator) {
         Question question = new Question();
         question.setTitle(title);
         question.setDescription(content);
@@ -44,11 +46,8 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> queryQuestions() {
-        List<Question> questions = questionMapper.queryQuestions();
-        for (Question question : questions) {
-
-        }
+    public List<QuestionDTO> queryQuestions() {
+        List<QuestionDTO> questions = questionMapper.queryQuestions();
         return questions;
     }
 }

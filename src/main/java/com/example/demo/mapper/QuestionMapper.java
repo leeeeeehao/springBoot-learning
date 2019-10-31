@@ -1,5 +1,6 @@
 package com.example.demo.mapper;
 
+import com.example.demo.dto.QuestionDTO;
 import com.example.demo.model.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -22,8 +23,7 @@ import java.util.List;
 @Mapper
 public interface QuestionMapper {
 
-    @Insert("insert into t_question(question_title,question_description,gmt_create,gmt_modified,question_creator,question_tags) values(#{title},#{description},#{gmtCreate},#{gmtModified},#{creator},#{tags}) ")
     int insertQuestion(Question question);
 
-    List<Question> queryQuestions();
+    List<QuestionDTO> queryQuestions();
 }

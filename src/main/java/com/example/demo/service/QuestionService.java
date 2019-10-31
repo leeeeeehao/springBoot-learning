@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Question;
-import com.example.demo.vo.QuestionVo;
+import com.example.demo.dto.QuestionDTO;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ import java.util.List;
  */
 public interface QuestionService {
 
-    void insertQuestion(String title, String content, String labels, Integer creator);
+    void insertQuestion(String title, String content, String labels, String creator);
 
-    List<Question> queryQuestions();
+    List<QuestionDTO> queryQuestions();
 }

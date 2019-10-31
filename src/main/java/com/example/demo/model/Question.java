@@ -43,7 +43,7 @@ public class Question {
     /**
      * 创建人
      */
-    private int creator;
+    private String creator;
     /**
      * 评论数
      */

@@ -27,7 +27,7 @@ public class QuestionDTO {
     /**
      * 问题标题
      */
-    private String Title;
+    private String title;
     /**
      * 问题描述
      */
@@ -43,7 +43,7 @@ public class QuestionDTO {
     /**
      * 创建人
      */
-    private int creator;
+    private String creator;
     /**
      * 评论数
      */
@@ -61,6 +61,9 @@ public class QuestionDTO {
      */
     private String tags;
 
-    private User user;
+    /**
+     * 用户头像
+     */
+    private String avatarUrl;
 
 }

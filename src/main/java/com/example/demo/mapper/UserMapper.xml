@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace用于绑定Dao接口 -->
+<mapper namespace="com.example.demo.mapper.UserMapper">
+
+    <!--通用结果查询-->
+    <resultMap id="BaseResultMap" type="com.example.demo.model.User">
+        <id column="id" property="id"/>
+        <id column="name" property="name"/>
+        <id column="account_id" property="accountId"/>
+        <id column="token" property="token"/>
+        <id column="avatar_url" property="avatarUrl"/>
+        <id column="gmt_create" property="gmtCreate"/>
+        <id column="gmt_modified" property="gmtModified"/>
+    </resultMap>
+
+    <select id="findUserToken"  parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from t_user where token = #{token}
+    </select>
+</mapper>

@@ -69,9 +69,9 @@ public class PublishController extends BaseController {
                 model.addAttribute("error", "用户未登录");
                 return "publish";
             } else {
-                questionService.insertQuestion(title, content, labels, user.getId());
+                questionService.insertQuestion(title, content, labels, user.getAccountId());
                 log.info("发布问题成功");
-                return "redirect:/";
+                return "redirect:/index";
             }
         } catch (Exception e) {
             log.error("发生错误");
