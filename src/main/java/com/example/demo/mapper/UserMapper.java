@@ -1,10 +1,10 @@
 package com.example.demo.mapper;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.example.demo.model.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 /**
  * @author leehao
@@ -12,20 +12,15 @@ import org.apache.ibatis.annotations.Select;
  * @date 2019/7/23 17:18
  */
 @Mapper
-public interface UserMapper {
-    /**
-     * 插入用户信息
-     *
-     * @param user
-     */
-    @Insert("insert into t_user(name,account_id,token,avatar_url,gmt_create,gmt_modified) values(#{name},#{accountId},#{token},#{avatarUrl},now(),now())")
-    void insert(User user);
+public interface UserMapper extends BaseMapper<User> {
 
     /**
-     * 查询用户token
+     * 根据token查询用户
      *
      * @param token
      * @return User
      */
     User findUserToken(@Param("token") String token);
+
+    User findUserToAccountId(@Param("accountId") String AccountId);
 }

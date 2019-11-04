@@ -1,5 +1,6 @@
 package com.example.demo.mapper;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.example.demo.dto.QuestionDTO;
 import com.example.demo.model.Question;
 import org.apache.ibatis.annotations.Insert;
@@ -21,7 +22,7 @@ import java.util.List;
  * @version v1.0
  */
 @Mapper
-public interface QuestionMapper {
+public interface QuestionMapper extends BaseMapper<Question> {
 
     int insertQuestion(Question question);
 

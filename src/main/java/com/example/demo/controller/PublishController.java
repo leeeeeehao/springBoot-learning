@@ -1,19 +1,15 @@
 package com.example.demo.controller;
 
-import com.example.demo.mapper.QuestionMapper;
-import com.example.demo.mapper.UserMapper;
-import com.example.demo.model.Question;
 import com.example.demo.model.User;
 import com.example.demo.service.QuestionService;
-import com.example.demo.vo.QuestionVo;
-import com.sun.xml.internal.rngom.parse.host.Base;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -24,12 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @Slf4j
 public class PublishController extends BaseController {
-
-    @Autowired
-    private QuestionMapper questionMapper;
-
-    @Autowired
-    private UserMapper userMapper;
 
     @Autowired
     private QuestionService questionService;

@@ -17,4 +17,9 @@
     <select id="findUserToken"  parameterType="java.lang.String" resultMap="BaseResultMap">
         select * from t_user where token = #{token}
     </select>
+    
+    <select id="findUserToAccountId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from t_user where account_id = #{accountId}
+    </select>
+
 </mapper>
